@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+     $("[data-iid]").hide();                           //Doubt
+     $("[data-labiid]").hide();                        // $("[data-iid='1']").show();..it works
+          var t;                                       // but if instead of one can I use a variable? Like... var c=1; $("[data-iid=c]").show();
+  
+   
+    $("[data-buttonE]").click(function (e) {
+       e.preventDefault();
+       var $selectedRow = $(this).parent("td").parent("tr");
+       var son=$selectedRow.data("id");
+       var n = son.charAt(0);
+       $("#"+n).show();
+       var sel=$("#"+n+"_valchk").text();
+       
+       if(sel==="Edit"){
+             $("#"+n).show();
+             $('#'+n+'_editbutton').text("Update");  
+             $("#"+n+"_defaulttext").hide();
+             $("#"+n+"_valchk").text("Update");
+             $("#"+n).keyup(function(e) {
+                  t=$("#"+n).val();
+             });
+       }
+       
+       else{
+                $('#'+n+'_editbutton').text("Edit");
+                $("#"+n+"_defaulttext").html(t);
+                $("#"+n+"_defaulttext").show();
+                $("#"+n).hide();
+                $("#"+n+"_valchk").text("Edit");
+       }    
+});
+   
+    /*for the button hide table show table*/  
+            var x = 1;
+           $("[data-tabiid='tab11']").hide();
+           $(function () {
+           $("[data-buttoniid='dv1']").click(function () {
+                  if ((x % 2) != 0) {
+                      $("[data-tabiid='tab11']").show();
+                      $(this).text('Hide table');
+                      x++;
+                   }
+                   else {
+                       $("[data-tabiid='tab11']").hide();
+                       $(this).html('Show table');
+                       x++;
+                   } 
+               });
+           });
+    
+    
+/*For When select all is checked all should get checked*/
+        $("[data-selallid]").click(function(event) {  
+        if(this.checked) { 
+            $("[data-class='chkbox']").each(function() { 
+                this.checked = true;  
+                $("[data-id]").each(function() {
+                    $(this).css('backgroundColor', 'pink');
+                    });
+                  $("#abc").css("backgroundColor","");
+                });
+        }else{
+            $("[data-class='chkbox']").each(function() { 
+                this.checked = false; 
+                 $("[data-id]").each(function() {
+                    $(this).css('backgroundColor', '');
+                    });
+                
+            });         
+        }
+    });
+
+/*When a particular check box is checked highlight it*/
+$("[data-tabiid='tab11']").find('input:checkbox[id$="chkbox"]').click(function() {
+    var isChecked = $(this).prop("checked");
+    var $selectedRow = $(this).parent("td").parent("tr");
+    if (isChecked) $selectedRow.css({
+        "background-color": "pink",
+    });
+    else $selectedRow.css({
+        "background-color": '',    
+    });
+});
+   
+  /*When individually check boxes are selected*/  
+  $("[data-class='chkbox']").click(function(){
+ 
+        if($("[data-class='chkbox']").length == $("[data-class='chkbox']:checked").length) {
+            $("[data-selallid='chkall']").prop("checked", "checked");
+        } else {
+           $("[data-selallid='chkall']").prop("checked","");
+        }
+ 
+    });      
+});
+</script>
+<style>
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 10px;
+}
+</style>
+
+</head>
+
+<body>
+<button id="dv" data-buttoniid="dv1">Show table</button>
+<table style="width:100%" id="tab1" data-tabiid="tab11">
+  <tr id="abc">
+    <th><input type="checkbox" data-selallid="chkall">Select all </th>
+    <th>Firstname</th>
+    <th>Lastname</th>		
+    <th>Actions</th>
+  </tr>
+  <tr data-id="1col_row">
+      <td><input type="checkbox" id="a_chkbox" data-class="chkbox">Select 1st row </td><td><input type="text" id="1" data-iid="1"><span id="1_defaulttext">sonali</span></input>
+          </td><td>Input Lastname</td><td><button id="1_editbutton" data-buttonE="EditUpdate">Edit</button><label data-labiid="valchk" id="1_valchk" for="1_editbutton">Edit</label></td>
+  </tr>
+  <tr data-id="2col_row">
+      <td><input type="checkbox" id="b_chkbox" data-class="chkbox">Select 2nd row  </td><td><input type="text" id="2" data-iid="2"><span id="2_defaulttext">Input First name</span></input> </td><td>Input Lastname</td><td><button id="2_editbutton" data-buttonE="EditUpdate">Edit</button><label id="2_valchk" for="2_editbutton" data-labiid="valchk">Edit</label></td>
+  </tr>
+ <tr data-id="3col_row">
+          <td><input type="checkbox" id="c_chkbox" data-class="chkbox">Select 3rd row  </td><td><input type="text" id="3" data-iid="3"><span id="3_defaulttext">Input First name</span></input> </td><td>Input Lastname</td><td><button id="3_editbutton" data-buttonE="EditUpdate">Edit</button><label id="3_valchk" for="1_editbutton" data-labiid="valchk">Edit</label></td>
+  </tr>
+  <tr data-id="4col_row">
+     <td><input type="checkbox" id="d_chkbox" data-class="chkbox">Select 4th row  </td><td><input type="text" id="4" data-iid="4"><span id="4_defaulttext">Input First name</span></input> </td><td>Input Lastname</td><td><button id="4_editbutton" data-buttonE="EditUpdate">Edit</button><label id="4_valchk" for="1_editbutton" data-labiid="valchk">Edit</label></td>
+  </tr>
+</table>
+
+
+
+
+</body>
+</html>
