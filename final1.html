@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+     
+     //Lists 
+     var Arunanchal = {"DistrictTable" : 
+        [
+                {"DistrictID" : "1","DistrictName" : "Arunanchal1"},
+                {"DistrictID" : "2","DistrictName" : "Arunanchal2"},
+        	{"DistrictID" : "3","DistrictName" : "Arunanchal3"},
+        	{"DistrictID" : "4","DistrictName" : "Arunanchal4"},
+                {"DistrictID" : "5","DistrictName" : "Arunanchal5"},
+        ]};  
+       
+        var Andhra = {"DistrictTable" : 
+        [
+                {"DistrictID" : "1","DistrictName" : "Andhra1"},
+                {"DistrictID" : "2","DistrictName" : "Andhra2"},
+        	{"DistrictID" : "3","DistrictName" : "Andhra3"},
+        	{"DistrictID" : "4","DistrictName" : "Andhra4"},
+                {"DistrictID" : "5","DistrictName" : "Andhra5"},
+        ]};  
+
+         var Assam = {"DistrictTable" : 
+        [
+                {"DistrictID" : "1","DistrictName" : "Assam1"},
+                {"DistrictID" : "2","DistrictName" : "Assam2"},
+        	{"DistrictID" : "3","DistrictName" : "Assam3"},
+        	{"DistrictID" : "4","DistrictName" : "Assam4"},
+                {"DistrictID" : "5","DistrictName" : "Assam5"},
+        ]};  
+     
+//On selection of state from dropdown
+
+  $("#State").change(function(){
+  
+    var x=$("#State").val();
+    var List1= "";
+					    
+                       $("#Districts").html(List1); 
+                      $("#Districts").prop("disabled", true);
+    if(x!=="0")
+     {
+         $("#getDistricts").prop('disabled',false);
+          $("#Districts").prop("disabled", false); 
+     }
+            else{
+                      var List= "";
+					    $("#getDistricts").prop('disabled',true);
+                       $("#Districts").html(List); 
+                      $("#Districts").prop("disabled", true);
+                }
+     
+      $("#getDistricts").click(function(){
+
+     if(x==="1")
+         {
+               
+      var List= "";
+      for (var i = 0; i < Andhra.DistrictTable.length; i++){
+        List+= "<option value='" +  Andhra.DistrictTable[i].DistrictID + "'>" + Andhra.DistrictTable[i].DistrictName + "</option>";
+      }
+         }
+      else if(x==="2"){
+                  
+                  var List= "";
+      for (var i = 0; i < Arunanchal.DistrictTable.length; i++){
+        List+= "<option value='" +  Arunanchal.DistrictTable[i].DistrictID + "'>" + Arunanchal.DistrictTable[i].DistrictName + "</option>";
+      }        
+             }
+
+             else if(x==="3"){
+                  
+                  var List= "";
+      for (var i = 0; i < Assam.DistrictTable.length; i++){
+        List+= "<option value='" +  Assam.DistrictTable[i].DistrictID + "'>" + Assam.DistrictTable[i].DistrictName + "</option>";
+      }        
+             }
+
+           
+          $("#getDistricts").attr('disabled','disabled');
+         $("#Districts").html(List); 
+
+     
+
+      });
+  });
+
+
+//For the input box validations
+ $("#try").hide();
+
+   $("#1").keyup(function(){
+    var x=$("#1").val();
+    if(x.length===30)
+   {
+       $("#try").show();
+       $("#1").css("background-color","red")
+
+   }
+   else if(x.length<30)
+   {
+         $("#try").hide();
+          $("#1").css("background-color","")
+   }
+  });
+
+
+
+$('#1').keydown(function (e) {
+if (e.shiftKey || e.ctrlKey || e.altKey) {
+e.preventDefault();
+} else {
+var key = e.keyCode;
+if (!((key == 8) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
+e.preventDefault();
+}
+}
+});
+
+
+ var totalChars      = 30; //Total characters allowed in textarea
+    var countTextBox    = $('#1') // Textarea input box
+    var charsCountEl    = $('#count'); // Remaining chars count will be displayed here
+    
+    charsCountEl.text(totalChars); //initial value of countchars element
+    countTextBox.keyup(function() { //user releases a key on the keyboard
+        var thisChars = this.value.replace(/{.*}/g, '').length; //get chars count in textarea
+        if(thisChars > totalChars) 
+        {
+            var CharsToDel = (thisChars-totalChars); 
+            this.value = this.value.substring(0,this.value.length-CharsToDel); 
+        }else{
+            charsCountEl.text( totalChars - thisChars ); 
+        }
+    });
+
+});
+</script>
+</head>
+<body>
+
+<div>
+States:
+<select id="State">
+<option value="0"> Select a State</option>
+<option value="1">Andhra Pradesh</option>
+<option value="2">Arunanchal Pradesh</option>
+<option value="3">Assam</option>
+</select>
+
+<button type="submit" id="getDistricts" disabled="true" >Get Districts</button>
+</div>
+
+<div>
+Select District:
+    <select id="Districts" disabled>
+         
+    </select>
+</div>
+<div>
+<b>Enter Text:</b><input type="text" id="1" maxlength=30 />
+<span name="count" id="count"></span> Characters Remaining
+    <p id="try">Max length exceeded</p>
+</div>
+
+
+</body>
+</html>
